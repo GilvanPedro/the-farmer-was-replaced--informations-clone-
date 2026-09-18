@@ -437,11 +437,11 @@
 
       <div class="main">
         <div class="editor-wrap">
-          <textarea id="code" spellcheck="false">for i in range(4):
+          <textarea id="code" spellcheck="false">for i in range(get_world_size()):
     plant(Entities.Bush)
     move(East)
 
-for i in range(4):
+for i in range(get_world_size()):
     if can_harvest():
         harvest()
     move(East)
