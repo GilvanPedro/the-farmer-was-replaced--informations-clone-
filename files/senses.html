@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senses &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Senses</h1>
+
+      <p>The drone can see now!</p>
+
+      <p style="margin-top: 18px;">The functions <span class="inline-code fn">get_pos_x()</span> and <span class="inline-code fn">get_pos_y()</span> return the current x and y position of the drone. At the start position they are both <span class="inline-code const">0</span>. The x position increases by 1 every tile towards East and the y position increases by 1 every tile towards North.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">num_items</span><span class="inline-code">(item)</span> returns how many of an item you have.</p>
+      <p>For example <span class="inline-code fn">num_items</span><span class="inline-code">(Items.<span style="color: var(--const);">Hay</span>)</span> returns how much hay you have.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">get_entity_type()</span> and <span class="inline-code fn">get_ground_type()</span> return the type of entity or ground that is under the drone.</p>
+
+      <p style="margin-top: 18px;">Do a flip if you are over a bush:</p>
+      <div class="code-block"><span class="kw">if</span> <span class="fn">get_entity_type()</span> == Entities.<span class="const">Bush</span>:
+    <span class="fn">do_a_flip()</span></div>
+
+      <p>The <span class="inline-code const">None</span> keyword is also unlocked now! <span class="inline-code const">None</span> is a value that represents that there is no value.</p>
+      <p>For example, a function that has no return statement will actually return <span class="inline-code const">None</span>.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">get_entity_type()</span> returns <span class="inline-code const">None</span> if there is no entity under the drone.</p>
+
+      <p style="margin-top: 18px;">If you want to find out how many of a particular unlock you have, use the <span class="inline-code fn">num_unlocked</span><span class="inline-code">(unlock)</span> function.</p>
+
+      <p style="margin-top: 18px;">For example, <span class="inline-code fn">num_unlocked</span><span class="inline-code">(Unlocks.<span style="color: var(--const);">Speed</span>)</span> will return the number of speed upgrades you have.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">num_unlocked</span><span class="inline-code">(Unlocks.<span style="color: var(--const);">Senses</span>)</span> will return 1 if senses are unlocked and 0 if they are not.</p>
+
+      <p style="margin-top: 18px;">You can also use <span class="inline-code fn">num_unlocked()</span> on Items, Entities or Grounds. This will return 1 if it's unlocked otherwise 0.</p>
+
+      <p style="margin-top: 18px;">Be careful <span class="inline-code fn">num_unlocked</span><span class="inline-code">(Unlocks.<span style="color: var(--const);">Carrots</span>)</span> will return the number of times it was unlocked/upgraded.</p>
+      <p><span class="inline-code fn">num_unlocked</span><span class="inline-code">(Items.<span style="color: var(--const);">Carrot</span>)</span> will only return 0 or 1. (Same for other plants)</p>
+    </div>
+  </div>
+</body>
+</html>

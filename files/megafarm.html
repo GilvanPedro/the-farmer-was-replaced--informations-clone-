@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mega Farm &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Mega Farm</h1>
+
+      <p>This incredibly powerful unlock gives you access to multiple drones.</p>
+
+      <p style="margin-top: 18px;">As before, you still start with just one drone. Additional drones must first be spawned and will disappear after the program terminates.</p>
+      <p>Each drone runs its own separate program. New drones can be spawned using the <span class="inline-code fn">spawn_drone</span><span class="inline-code">(function)</span> function.</p>
+
+      <div class="code-block"><span class="kw">def</span> drone_function():
+    <span class="fn">move</span>(<span class="const">North</span>)
+    <span class="fn">do_a_flip()</span>
+
+<span class="fn">spawn_drone</span>(drone_function)</div>
+
+      <p>This spawns a new drone in the same position as the drone that ran the <span class="inline-code fn">spawn_drone</span><span class="inline-code">(function)</span> command. The new drone then begins executing the specified function. After it is done, it will disappear automatically.</p>
+
+      <p style="margin-top: 18px;">Drones do not collide with each other.</p>
+
+      <p style="margin-top: 18px;">Use <span class="inline-code fn">max_drones()</span> to get the maximum number of drones that can exist simultaneously.</p>
+      <p>Use <span class="inline-code fn">num_drones()</span> to get the number of drones that are already on the farm.</p>
+
+      <h2>Example:</h2>
+
+      <div class="code-block"><span class="kw">def</span> harvest_column():
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">get_world_size()</span>):
+        <span class="fn">harvest()</span>
+        <span class="fn">move</span>(<span class="const">North</span>)
+
+<span class="kw">while</span> <span class="const">True</span>:
+    <span class="kw">if</span> <span class="fn">spawn_drone</span>(harvest_column):
+        <span class="fn">move</span>(<span class="const">East</span>)</div>
+
+      <p>This will cause your first drone to move horizontally and spawn more drones. The spawned drones will then move vertically and harvest everything in their path.</p>
+
+      <p style="margin-top: 18px;">If all available drones have already been spawned, <span class="inline-code fn">spawn_drone()</span> will do nothing and return <span class="inline-code const">None</span>.</p>
+
+      <p style="margin-top: 18px;">Here's another example that passes a different direction to each drone.</p>
+
+      <div class="code-block"><span class="kw">for</span> dir <span class="kw">in</span> [<span class="const">North</span>, <span class="const">East</span>, <span class="const">South</span>, <span class="const">West</span>]:
+    <span class="kw">def</span> task():
+        <span class="fn">move</span>(dir)
+        <span class="fn">do_a_flip()</span>
+    <span class="fn">spawn_drone</span>(task)</div>
+
+      <h2>All Drones Are Equal</h2>
+
+      <p>There is no special "main" drone. All drones can spawn other drones, and they all count toward the drone limit. All drones disappear when they terminate. If the first drone finishes its program early, another drone will become the one whose execution is visualized with code highlights. All drones can trigger breakpoints, and when a drone triggers a breakpoint, the code highlighting switches to that drone.</p>
+    </div>
+  </div>
+</body>
+</html>

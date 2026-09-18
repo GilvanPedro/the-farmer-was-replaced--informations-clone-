@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cactus &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited { color: var(--link-visited); }
+  a.inline-link:hover { color: #e4f07a; }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .grids {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin: 4px 0 18px;
+  }
+
+  .grid {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--const);
+  }
+
+  .grid .row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .grid .row span {
+    width: 1.1ch;
+  }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    p { font-size: 15px; }
+    .grid { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Cactus</h1>
+
+      <p>Like other plants, <a class="inline-link" href="plant.html">cacti</a> can be grown on soil and harvested as usual.</p>
+
+      <p>However, they come in various sizes and have a strange sense of order.</p>
+
+      <p>If you harvest a fully-grown cactus and all neighboring cacti are in sorted order, it will also harvest all neighboring cacti recursively.</p>
+
+      <p>A cactus is considered to be in sorted order if all neighboring cacti to the <span class="inline-code const">North</span> and <span class="inline-code const">East</span> are fully grown and larger or equal in size and all neighboring cacti to the <span class="inline-code const">South</span> and <span class="inline-code const">West</span> are fully grown and smaller or equal in size.</p>
+
+      <p>The harvest will only spread if all adjacent cacti are fully grown and in sorted order. This means that if a square of grown cacti is sorted by size and you harvest one cactus, it will harvest the entire square.</p>
+
+      <p>A fully grown cactus will appear brown if it is not sorted. Once sorted, it will turn green again.</p>
+
+      <p>You will receive cactus equal to the number of harvested cacti squared. So if you harvest <span class="inline-code">n</span> cacti simultaneously you will receive <span class="inline-code">n**2</span> Items.<span class="inline-code const">Cactus</span>.</p>
+
+      <p>The size of a cactus can be measured with <span class="inline-code fn">measure()</span>.</p>
+      <p>It is always one of these numbers: <span class="inline-code const">0,1,2,3,4,5,6,7,8,9</span>.</p>
+
+      <p style="margin-top: 18px;">You can also pass a direction into <span class="inline-code fn">measure</span><span class="inline-code">(direction)</span> to measure the neighboring tile in that direction of the drone.</p>
+
+      <p style="margin-top: 18px;">You can swap a cactus with its neighbor in any direction using the <span class="inline-code fn">swap()</span> command.</p>
+      <p><span class="inline-code fn">swap</span><span class="inline-code">(direction)</span> swaps the object under the drone with the object one tile in the direction of the drone.</p>
+
+      <h2>Examples</h2>
+
+      <p>In each of these grids, all the cacti are in sorted order and the harvest will spread over the entire field:</p>
+
+      <div class="grids">
+        <div class="grid">
+          <div class="row"><span>3</span><span>4</span><span>5</span></div>
+          <div class="row"><span>2</span><span>3</span><span>4</span></div>
+          <div class="row"><span>1</span><span>2</span><span>3</span></div>
+        </div>
+        <div class="grid">
+          <div class="row"><span>3</span><span>3</span><span>3</span></div>
+          <div class="row"><span>2</span><span>2</span><span>2</span></div>
+          <div class="row"><span>1</span><span>1</span><span>1</span></div>
+        </div>
+        <div class="grid">
+          <div class="row"><span>1</span><span>2</span><span>3</span></div>
+          <div class="row"><span>1</span><span>2</span><span>3</span></div>
+          <div class="row"><span>1</span><span>2</span><span>3</span></div>
+        </div>
+        <div class="grid">
+          <div class="row"><span>1</span><span>5</span><span>9</span></div>
+          <div class="row"><span>1</span><span>3</span><span>8</span></div>
+          <div class="row"><span>1</span><span>3</span><span>4</span></div>
+        </div>
+      </div>
+
+      <p>In this grid, only the lower left cactus is in sorted order, which is not enough for it to spread:</p>
+
+      <div class="grids">
+        <div class="grid">
+          <div class="row"><span>1</span><span>5</span><span>3</span></div>
+          <div class="row"><span>4</span><span>9</span><span>7</span></div>
+          <div class="row"><span>3</span><span>3</span><span>2</span></div>
+        </div>
+      </div>
+
+      <p>If the rows are already sorted, sorting the columns will not unsort the rows.</p>
+
+      <p>If you're not familiar with sorting algorithms, you might want to look them up online and think about which ones could be adapted to this problem. Keep in mind that not all of them work because you can only swap neighboring cacti.</p>
+    </div>
+  </div>
+</body>
+</html>

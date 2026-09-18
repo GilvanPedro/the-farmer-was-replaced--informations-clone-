@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timing &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 24px 0 10px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 17px; }
+    p { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Timing</h1>
+
+      <p>If you really want to optimize your methods you need to understand how time is measured in this game. This unlock is all about that.</p>
+
+      <h2>New Functions</h2>
+
+      <p>There are two useful functions to measure how long things take:</p>
+
+      <p><span class="inline-code fn">get_time()</span> returns the time in seconds since the start of the game.</p>
+
+      <p><span class="inline-code fn">get_tick_count()</span> returns the number of ticks performed since the start of execution.</p>
+
+      <p style="margin-top: 18px;">These two functions as well as <span class="inline-code fn">quick_print()</span>, are completely free. Even the call operation is free for them.</p>
+
+      <h2>Runtime Details</h2>
+
+      <h3>Heads-Up</h3>
+
+      <p>This is not how performance works in the real world. These are just rules made up for this game to have a consistent and understandable timing model.</p>
+      <p>You will probably only care about this if you want to hyper-optimize your code.</p>
+
+      <p style="margin-top: 18px;">The basic unit of time for code execution is called a "tick". Without speed upgrades and power, the execution proceeds at a rate of 400 ticks per second.</p>
+
+      <p style="margin-top: 18px;">In general, operations that combine two values such as <span class="inline-code">+, -, *, /, //, %,</span> <span class="inline-code kw">and</span>, <span class="inline-code kw">or</span>, ... take one tick to run.</p>
+      <p>Single value <span class="inline-code">-</span> and <span class="inline-code kw">not</span> are free.</p>
+      <p>An <span class="inline-code kw">if</span> branch also takes one tick to run (in addition to the time it takes to evaluate the condition expression).</p>
+      <p>Function calls and variable reads and writes are free but function definitions take 1 tick.</p>
+      <p><span class="inline-code kw">import</span> statements are free.</p>
+      <p>Accessing an imported module with the <span class="inline-code">.</span> operator is free.</p>
+      <p>If a function or module has been passed via arguments or variable assignments, using it will cost 1 tick instead of 0.</p>
+      <p><span class="inline-code kw">for</span> and <span class="inline-code kw">while</span> loops take one tick to start, but the iterations are free (not counting the time to evaluate the condition/sequence expressions).</p>
+      <p><span class="inline-code kw">return</span>, <span class="inline-code kw">break</span> and <span class="inline-code kw">continue</span> are all free.</p>
+      <p><span class="inline-code kw">pass</span> takes one tick so it can be used to create precise delays.</p>
+      <p>Indexing into a datastructure takes one tick for the index operator and, in the case of a dictionary or set, additional ticks depending on the size of the key.</p>
+
+      <p style="margin-top: 18px;">The number of ticks that builtin functions take to execute is documented in the documentation of each function on an individual basis.</p>
+    </div>
+  </div>
+</body>
+</html>

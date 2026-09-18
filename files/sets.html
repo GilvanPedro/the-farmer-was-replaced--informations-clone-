@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sets &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited {
+    color: var(--link-visited);
+  }
+
+  a.inline-link:hover {
+    color: #e4f07a;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .const { color: var(--const); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Sets</h1>
+
+      <p>Sets are like <a class="inline-link" href="dictionaries.html">dictionaries</a>, but without values. They're just an unordered set of keys.</p>
+
+      <p>They are created like dictionaries, but without values.</p>
+      <div class="code-block">set = {<span class="const">North</span>, <span class="const">East</span>, <span class="const">West</span>}</div>
+
+      <p>Use <span class="inline-code fn">set()</span> to create an empty set. Note that <span class="inline-code">{}</span> creates an empty dictionary.</p>
+
+      <p>Use <span class="inline-code">set.</span><span class="inline-code fn">add</span><span class="inline-code">(elem)</span> to add a new element to the set.</p>
+
+      <p>Use <span class="inline-code">set.</span><span class="inline-code fn">remove</span><span class="inline-code">(elem)</span> to remove an element from a set.</p>
+
+      <p>Use <span class="inline-code kw">if</span> <span class="inline-code">elem</span> <span class="inline-code kw">in</span> <span class="inline-code">set:</span> to check if the set contains an element.</p>
+
+      <p>Use <span class="inline-code kw">for</span> <span class="inline-code">elem</span> <span class="inline-code kw">in</span> <span class="inline-code">set:</span> to iterate all elements in the set.</p>
+      <p>For larger sets the <span class="inline-code kw">in</span> operator performs much faster than it would on a list.</p>
+
+      <p style="margin-top: 18px;">Just like dictionaries, sets are unordered, so there are no guarantees about the order in which the elements are iterated.</p>
+
+      <p>Also, elements in sets are unique, so adding an element that is already in the set will not change the set.</p>
+    </div>
+  </div>
+</body>
+</html>

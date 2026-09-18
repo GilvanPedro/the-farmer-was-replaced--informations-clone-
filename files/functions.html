@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Functions &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+    --comment: #8a8a82;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited {
+    color: var(--link-visited);
+  }
+
+  a.inline-link:hover {
+    color: #e4f07a;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.fn { color: var(--fn); }
+  .inline-code.const { color: var(--const); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+  .code-block .comment { color: var(--comment); font-weight: 400; }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Functions</h1>
+
+      <p>Use the <span class="inline-code kw">def</span> keyword to define a new function:</p>
+      <div class="code-block"><span class="kw">def</span> f(arg1, arg2 = <span class="const">False</span>):
+    <span class="comment">#function code</span></div>
+
+      <p>You can use the call operator <span class="inline-code">()</span> to call the function:</p>
+      <div class="code-block">f(<span class="const">42</span>)</div>
+
+      <p>Also see <a class="inline-link" href="name-scopes.html">Scopes</a> to learn about local and global variables in functions.</p>
+
+      <h2>Introduction</h2>
+
+      <p>You've already seen built-in functions like <span class="inline-code fn">harvest()</span>.</p>
+      <p>You can also define your own functions which allows structuring your code in a modular way. It basically allows you to give a name to a block of code so you can call it from anywhere you want.</p>
+
+      <h2>Function Definitions</h2>
+
+      <p>For example, you could define a function that moves the drone several times.</p>
+
+      <div class="code-block"><span class="kw">def</span> move_n_dir(n, dir):
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        <span class="fn">move</span>(dir)</div>
+
+      <p>The <span class="inline-code kw">def</span> keyword signals that this is a function definition.</p>
+      <p><span class="inline-code">move_n_dir</span> is the name that the function gets bound to. This can be any valid variable name and will be used to call the function.</p>
+      <p><span class="inline-code">n</span> and <span class="inline-code">dir</span> are parameters. They are variables that hold the values that are passed into the function (These values are also called arguments). You can add as many parameters to a function definition as you want.</p>
+      <p>After the <span class="inline-code">:</span> comes the code block that will run when the function is called.</p>
+
+      <p>With the above definition the following code then moves the drone <span class="inline-code const">10</span> tiles <span class="inline-code const">North</span> and <span class="inline-code const">2</span> tiles <span class="inline-code const">West</span>.</p>
+
+      <div class="code-block">move_n_dir(<span class="const">10</span>, <span class="const">North</span>)
+move_n_dir(<span class="const">2</span>, <span class="const">West</span>)</div>
+
+      <p>When you see <span class="inline-code kw">def</span> <span class="inline-code">function():</span> you should really think of it as a variable assignment like this:</p>
+      <div class="code-block">function = create_new_function_object()</div>
+      <p>Like with all assignments, you can't use the variable before it was assigned!</p>
+      <p>The <span class="inline-code kw">def</span> statement has to run before any function calls.</p>
+      <p>This code will throw an error:</p>
+
+      <div class="code-block">func()
+<span class="kw">def</span> func():
+    <span class="kw">pass</span></div>
+
+      <h2>Return Values</h2>
+
+      <p>Use the <span class="inline-code kw">return</span> keyword to make a function return a value.</p>
+      <p>For example, the following function defines the exclusive or operation. The exclusive or returns <span class="inline-code const">True</span> if one value is <span class="inline-code const">True</span> and the other one is <span class="inline-code const">False</span>:</p>
+
+      <div class="code-block"><span class="kw">def</span> xor(a, b):
+    <span class="kw">return</span> a != b</div>
+
+      <div class="code-block"><span class="kw">if</span> xor(<span class="const">True</span>, <span class="const">False</span>):
+    <span class="fn">do_a_flip()</span></div>
+
+      <p><a class="inline-link" href="tuples.html">Tuples</a> allow returning multiple values.</p>
+
+      <h2>Default Arguments</h2>
+
+      <p>You can also assign default values that will be used if no arguments are passed.</p>
+
+      <div class="code-block"><span class="kw">def</span> f(a = <span class="const">False</span>):
+    <span class="kw">if</span> a:
+        <span class="fn">do_a_flip()</span></div>
+
+      <div class="code-block">f()</div>
+
+      <div class="code-block">f(<span class="const">True</span>)</div>
+
+      <p>An argument that has a default value cannot be followed by an argument that doesn't have a default value.</p>
+
+      <h2>Advanced Function Usage</h2>
+
+      <p>Functions are values just like any other value, and the <span class="inline-code kw">def</span> statement just acts like an assignment statement, assigning the function to whatever name you give it. This allows doing things like this:</p>
+
+      <div class="code-block"><span class="kw">def</span> f():
+    <span class="kw">def</span> d():
+        <span class="fn">do_a_flip()</span>
+    <span class="kw">return</span> d</div>
+
+      <div class="code-block">f()()</div>
+
+      <p>Here <span class="inline-code">f()</span> calls the function <span class="inline-code">f</span> which defines and returns a new function <span class="inline-code">d</span>. The second <span class="inline-code">()</span> then executes the returned function and performs flip.</p>
+      <p>(Doing these sort of things is usually not a good idea because it's hard to see what's going on)</p>
+
+      <p>Functions that take other functions as arguments let you get really creative:</p>
+
+      <div class="code-block"><span class="kw">def</span> f(g, arg):
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="const">10</span>):
+        g(arg)</div>
+
+      <div class="code-block">f(<span class="fn">move</span>, <span class="const">North</span>)
+f(<span class="fn">use_item</span>, Items.<span class="const">Fertilizer</span>)</div>
+
+      <p>This code moves the drone <span class="inline-code const">North</span> 10 times and then uses fertilizer 10 times.</p>
+    </div>
+  </div>
+</body>
+</html>

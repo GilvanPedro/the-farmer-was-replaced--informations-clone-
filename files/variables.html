@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variables &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+  .inline-code.kw { color: var(--kw); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Variables</h1>
+
+      <p>Variables can be thought of as named containers that can hold a value.</p>
+      <p>The <span class="inline-code">=</span> operator is used to declare a variable and store a value in it.</p>
+
+      <div class="code-block">variable_name = value</div>
+
+      <p>The left hand side of the operator is the variable name. You can give it any name you want.</p>
+      <p>The right hand side is an expression whose resulting value will be stored in the variable.</p>
+
+      <p style="margin-top: 18px;">Declare a variable named <span class="inline-code">a</span> and store the value <span class="inline-code const">5</span> in it:</p>
+      <div class="code-block">a = <span class="const">5</span></div>
+      <p>Declare a variable named <span class="inline-code">b</span> and store the return value of <span class="inline-code fn">can_harvest()</span> in it:</p>
+      <div class="code-block">b = <span class="fn">can_harvest()</span></div>
+
+      <p style="margin-top: 18px;">Do not confuse the <span class="inline-code">=</span> operator with the <span class="inline-code">==</span> operator.</p>
+      <p>The <span class="inline-code">==</span> operator checks whether two values are equal and returns <span class="inline-code const">True</span> or <span class="inline-code const">False</span>.</p>
+      <p>The <span class="inline-code">=</span> operator assigns the value on the right to the name on the left.</p>
+
+      <p style="margin-top: 18px;">After a variable has been assigned you can use it in the code to retrieve the value it contains</p>
+
+      <div class="code-block">a = <span class="const">5</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(a):
+    <span class="fn">do_a_flip()</span></div>
+
+      <p>The above loop is executed 5 times because <span class="inline-code">a</span> is set to <span class="inline-code const">5</span>.</p>
+      <p>The <span class="inline-code">i</span> in the <span class="inline-code kw">for</span> loop is also a variable that is automatically assigned the current value of the sequence at each iteration of the loop. (It doesn't have to be called <span class="inline-code">i</span>, you can give it any valid variable name.)</p>
+
+      <p style="margin-top: 18px;">Variables also let you do the same thing with a while loop:</p>
+
+      <div class="code-block">a = <span class="const">5</span>
+i = <span class="const">0</span>
+<span class="kw">while</span> i &lt; a:
+    <span class="fn">do_a_flip()</span>
+    i = i + <span class="const">1</span></div>
+
+      <p>This does the same thing as the for loop above. We just have to increment i manually.</p>
+      <p>Note that to increment i, we set it to be its own value plus <span class="inline-code const">1</span>. Changing the value of a variable based on its previous value is something very common.</p>
+      <p>It can be abbreviated using these operators: <span class="inline-code">+=, -=, *=, /=, %=</span></p>
+
+      <div class="code-block">i = i + <span class="const">1</span> is the same as i += <span class="const">1</span></div>
+      <div class="code-block">a = a / <span class="const">3</span> is the same as a /= <span class="const">3</span></div>
+    </div>
+  </div>
+</body>
+</html>

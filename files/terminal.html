@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --term-bg: #17181a;
+    --term-ink: #d7f0a0;
+    --term-ink-dim: #7f8a6a;
+    --term-error: #e08a6a;
+    --accent: #e0a83e;
+    --soil: #6b4a2f;
+    --grass: #3c5a2c;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(1320px, 100%);
+    height: min(800px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover { background: #93a34a; }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover { background: rgba(124, 138, 61, 0.25); }
+  .titlebar .back-btn:active, .titlebar .home-btn:active { transform: translateY(1px); }
+
+  .titlebar .status {
+    margin-left: auto;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--ink-dim);
+  }
+
+  .body-wrap {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+  }
+
+  .side {
+    width: 220px;
+    flex-shrink: 0;
+    background: #26261f;
+    border-right: 1px solid #3a3a34;
+    padding: 16px 14px;
+    overflow-y: auto;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+  }
+
+  .side h2 {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .side .group { margin-bottom: 16px; }
+
+  .side code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--accent);
+  }
+
+  .main {
+    flex: 1.3;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-right: 1px solid #3a3a34;
+  }
+
+  .editor-wrap {
+    padding: 16px 16px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  textarea#code {
+    width: 100%;
+    height: 140px;
+    resize: vertical;
+    background: var(--term-bg);
+    color: var(--term-ink);
+    border: 1px solid #3a3a34;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 12px;
+    outline: none;
+  }
+
+  textarea#code:focus { border-color: var(--icon); }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-run {
+    background: var(--icon);
+    color: #1a1a19;
+  }
+
+  .btn-run:hover { background: #93a34a; }
+  .btn-run:disabled { background: #5a5f47; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink-dim);
+    border: 1px solid #4a4a44;
+  }
+
+  .btn-secondary:hover { color: var(--ink); border-color: var(--icon); }
+
+  .hint {
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-left: auto;
+  }
+
+  .console {
+    flex: 1;
+    margin: 8px 16px 16px;
+    background: var(--term-bg);
+    border: 1px solid #3a3a34;
+    border-radius: 6px;
+    overflow-y: auto;
+    padding: 14px 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .console .line-out { color: var(--term-ink); }
+  .console .line-err { color: var(--term-error); }
+  .console .line-sys { color: var(--term-ink-dim); }
+  .console .sep {
+    border-top: 1px dashed #33342d;
+    margin: 10px 0;
+  }
+
+  .console::-webkit-scrollbar { width: 10px; }
+  .console::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+  .console::-webkit-scrollbar-track { background: var(--term-bg); }
+
+  .side::-webkit-scrollbar { width: 8px; }
+  .side::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+
+  .game-panel {
+    width: 360px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow-y: auto;
+    background: #1f1f1c;
+  }
+
+  .game-panel h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+
+  .game-hud {
+    margin-bottom: 12px;
+  }
+
+  .hud-pos {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    margin-bottom: 8px;
+  }
+
+  .hud-inv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+
+  .hud-item {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    background: #2c2c28;
+    border-radius: 4px;
+    padding: 2px 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hud-emoji { font-size: 13px; }
+
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--n, 5), 1fr);
+    gap: 2px;
+    background: #111110;
+    border: 1px solid #3a3a34;
+    border-radius: 6px;
+    padding: 6px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border-radius: 3px;
+    position: relative;
+    line-height: 1;
+  }
+
+  .tile-grass { background: var(--grass); }
+  .tile-soil { background: var(--soil); }
+
+  .tile-drone {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .tile-sub {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    font-size: 10px;
+  }
+
+  .game-toobig {
+    font-size: 13px;
+    color: var(--ink-dim);
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  .game-legend {
+    margin-top: 14px;
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+
+  .game-legend code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--accent);
+  }
+
+  .body-wrap.minimized .side,
+  .body-wrap.minimized .console,
+  .body-wrap.minimized .game-panel {
+    display: none;
+  }
+
+  .body-wrap.minimized .main {
+    border-right: none;
+  }
+
+  .body-wrap.minimized .editor-wrap {
+    flex: 1;
+    padding-bottom: 16px;
+  }
+
+  .body-wrap.minimized textarea#code {
+    flex: 1;
+    height: auto;
+  }
+
+  @media (max-width: 1080px) {
+    .window { height: 100vh; width: 100vw; }
+    .body-wrap { flex-direction: column; overflow-y: auto; }
+    .side { width: auto; max-height: 140px; border-right: none; border-bottom: 1px solid #3a3a34; }
+    .main { border-right: none; border-bottom: 1px solid #3a3a34; }
+    .game-panel { width: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+      <a class="home-btn" href="terminal.html" aria-label="Abrir terminal Python">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 4h16v16H4z"/>
+          <path d="M8 9l3 3-3 3"/>
+          <path d="M13 15h3"/>
+        </svg>
+        Terminal
+      </a>
+      <span class="status" id="status">carregando Python...</span>
+    </div>
+
+    <div class="body-wrap">
+      <div class="side">
+        <div class="group">
+          <h2>Sobre</h2>
+          Simulador simplificado baseado no <code>__builtins__.py</code> da comunidade. Python real (Pyodide) + fazenda desenhada em TypeScript compilado no navegador. Sem timers de crescimento, custos reais ou limite de drones.
+        </div>
+        <div class="group">
+          <h2>Drone</h2>
+          <code>move(dir)</code> <code>can_move(dir)</code><br>
+          <code>harvest()</code> <code>can_harvest()</code><br>
+          <code>plant(entity)</code> <code>till()</code><br>
+          <code>get_pos_x()</code> <code>get_pos_y()</code><br>
+          <code>get_world_size()</code><br>
+          <code>get_entity_type()</code> <code>get_ground_type()</code>
+        </div>
+        <div class="group">
+          <h2>Constantes</h2>
+          <code>North East South West</code><br>
+          <code>Entities.Bush</code> ...<br>
+          <code>Items.Hay</code> ...<br>
+          <code>Grounds.Soil</code> <code>Grounds.Grassland</code>
+        </div>
+        <div class="group">
+          <h2>Utilitarios</h2>
+          <code>print(*args)</code><br>
+          <code>random()</code> <code>min()</code> <code>max()</code><br>
+          <code>num_items(item)</code><br>
+          <code>set_world_size(n)</code>
+        </div>
+        <div class="group">
+          <h2>Atalhos</h2>
+          Ctrl+Enter roda o codigo.<br>
+          "Resetar Mundo" reinicia tudo.
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="editor-wrap">
+          <textarea id="code" spellcheck="false">for i in range(4):
+    plant(Entities.Bush)
+    move(East)
+
+for i in range(4):
+    if can_harvest():
+        harvest()
+    move(East)
+
+print("posicao:", get_pos_x(), get_pos_y())</textarea>
+          <div class="btn-row">
+            <button class="btn btn-run" id="run-btn" disabled>Rodar</button>
+            <button class="btn btn-secondary" id="stop-btn" style="display:none;">Parar</button>
+            <button class="btn btn-secondary" id="clear-btn">Limpar saida</button>
+            <button class="btn btn-secondary" id="reset-btn">Resetar mundo</button>
+            <button class="btn btn-secondary" id="minimize-btn">Minimizar</button>
+            <span class="hint">Ctrl+Enter para rodar</span>
+          </div>
+        </div>
+        <div class="console" id="console">
+          <div class="line-sys">Inicializando o interpretador Python (Pyodide)...</div>
+        </div>
+      </div>
+
+      <div class="game-panel">
+        <h2>Fazenda (ao vivo)</h2>
+        <div class="game-hud" id="game-hud"></div>
+        <div class="game-grid" id="game-grid"></div>
+        <div class="game-legend">
+          🛸 drone &nbsp; 🌳 bush/tree &nbsp; 🥕 carrot &nbsp; 🎃 pumpkin &nbsp; 🌻 sunflower &nbsp; 🌵 cactus<br>
+          fundo verde = grassland, fundo marrom = soil (tilled)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/typescript@5.5.4/lib/typescript.js"></script>
+  <script>
+    // ---- Game renderer, authored in TypeScript and compiled in-browser ----
+    const GAME_TS_SOURCE = `
+interface LogEvent {
+  type: string;
+  x?: number;
+  y?: number;
+  success?: boolean;
+  entity?: string | null;
+  ground?: string;
+  size?: number;
+}
+
+interface FullState {
+  size: number;
+  x: number;
+  y: number;
+  grid: { x: number; y: number; entity: string }[];
+  ground: { x: number; y: number; ground: string }[];
+  inventory: Record<string, number>;
+  ticks: number;
+  log: LogEvent[];
+}
+
+const ENTITY_EMOJI: Record<string, string> = {
+  Apple: "\u{1F34E}", Bush: "\u{1F333}", Cactus: "\u{1F335}", Carrot: "\u{1F955}",
+  Dead_Pumpkin: "\u{1F480}", Dinosaur: "\u{1F9B4}", Grass: "\u{1F33E}", Hedge: "\u{1F332}",
+  Pumpkin: "\u{1F383}", Sunflower: "\u{1F33B}", Treasure: "\u{1F4B0}", Tree: "\u{1F332}"
+};
+
+const ITEM_EMOJI: Record<string, string> = {
+  Hay: "\u{1F33E}", Wood: "\u{1FAB5}", Carrot: "\u{1F955}", Pumpkin: "\u{1F383}", Cactus: "\u{1F335}",
+  Bone: "\u{1F9B4}", Weird_Substance: "\u{1F48E}", Gold: "\u{1FA99}", Water: "\u{1F4A7}",
+  Fertilizer: "\u{1F9EA}", Power: "\u26A1"
+};
+
+class TFWRGame {
+  size: number = 5;
+  x: number = 0;
+  y: number = 0;
+  grid: Map<string, string> = new Map();
+  ground: Map<string, string> = new Map();
+  inventory: Record<string, number> = {};
+  container: HTMLElement | null = null;
+  hud: HTMLElement | null = null;
+
+  key(x: number, y: number): string {
+    return x + "," + y;
+  }
+
+  init(container: HTMLElement, hud: HTMLElement): void {
+    this.container = container;
+    this.hud = hud;
+    this.render();
+  }
+
+  resize(size: number): void {
+    this.size = size;
+    this.grid.clear();
+    this.ground.clear();
+    this.x = 0;
+    this.y = 0;
+  }
+
+  applyEvent(evt: LogEvent): void {
+    switch (evt.type) {
+      case "move":
+        this.x = evt.x as number;
+        this.y = evt.y as number;
+        break;
+      case "plant":
+        if (evt.success && evt.entity) {
+          this.grid.set(this.key(evt.x as number, evt.y as number), evt.entity);
+        }
+        break;
+      case "harvest":
+        if (evt.success) {
+          this.grid.delete(this.key(evt.x as number, evt.y as number));
+        }
+        break;
+      case "till":
+        if (evt.ground) {
+          this.ground.set(this.key(evt.x as number, evt.y as number), evt.ground);
+        }
+        break;
+      case "resize":
+        if (evt.size) this.resize(evt.size);
+        break;
+      default:
+        break;
+    }
+  }
+
+  hardSync(state: FullState): void {
+    this.size = state.size;
+    this.x = state.x;
+    this.y = state.y;
+    this.grid.clear();
+    for (const c of state.grid) this.grid.set(this.key(c.x, c.y), c.entity);
+    this.ground.clear();
+    for (const c of state.ground) this.ground.set(this.key(c.x, c.y), c.ground);
+    this.inventory = state.inventory;
+  }
+
+  render(): void {
+    if (!this.container) return;
+    const n = this.size;
+    if (n > 25) {
+      this.container.innerHTML = '<div class="game-toobig">Mundo grande demais (' + n + 'x' + n + ') para desenhar tile a tile. Posicao: (' + this.x + ', ' + this.y + ')</div>';
+    } else {
+      this.container.style.setProperty('--n', String(n));
+      this.container.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+      this.container.style.gridTemplateRows = 'repeat(' + n + ', 1fr)';
+      let html = '';
+      for (let row = n - 1; row >= 0; row--) {
+        for (let col = 0; col < n; col++) {
+          const isDrone = col === this.x && row === this.y;
+          const groundName = this.ground.get(this.key(col, row)) || 'Grassland';
+          const entityName = this.grid.get(this.key(col, row));
+          const groundClass = groundName === 'Soil' ? 'tile-soil' : 'tile-grass';
+          let inner = '';
+          if (entityName && ENTITY_EMOJI[entityName]) inner = ENTITY_EMOJI[entityName];
+          if (isDrone) {
+            inner = '\u{1F6F8}' + (inner ? '<span class="tile-sub">' + inner + '</span>' : '');
+          }
+          html += '<div class="tile ' + groundClass + (isDrone ? ' tile-drone' : '') + '">' + inner + '</div>';
+        }
+      }
+      this.container.innerHTML = html;
+    }
+    this.renderHud();
+  }
+
+  renderHud(): void {
+    if (!this.hud) return;
+    const parts: string[] = [];
+    parts.push('<div class="hud-pos">Posicao: (' + this.x + ', ' + this.y + ') &middot; Mundo: ' + this.size + 'x' + this.size + '</div>');
+    let invHtml = '<div class="hud-inv">';
+    for (const key of Object.keys(ITEM_EMOJI)) {
+      const amount = this.inventory[key];
+      if (amount === undefined) continue;
+      invHtml += '<span class="hud-item"><span class="hud-emoji">' + ITEM_EMOJI[key] + '</span>' + amount + '</span>';
+    }
+    invHtml += '</div>';
+    parts.push(invHtml);
+    this.hud.innerHTML = parts.join('');
+  }
+}
+
+(window as any).TFWRGame = new TFWRGame();
+`;
+
+    function compileAndRunTs(source) {
+      const result = ts.transpileModule(source, {
+        compilerOptions: {
+          module: ts.ModuleKind.None,
+          target: ts.ScriptTarget.ES2019,
+          strict: false
+        }
+      });
+      const scriptEl = document.createElement('script');
+      scriptEl.textContent = result.outputText;
+      document.body.appendChild(scriptEl);
+    }
+
+    compileAndRunTs(GAME_TS_SOURCE);
+    window.TFWRGame.init(document.getElementById('game-grid'), document.getElementById('game-hud'));
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/pyodide@0.26.4/pyodide.js"></script>
+  <script>
+    const consoleEl = document.getElementById('console');
+    const statusEl = document.getElementById('status');
+    const runBtn = document.getElementById('run-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const minimizeBtn = document.getElementById('minimize-btn');
+    const bodyWrap = document.querySelector('.body-wrap');
+    const codeEl = document.getElementById('code');
+
+    let minimized = false;
+
+    function setMinimized(state) {
+      minimized = state;
+      bodyWrap.classList.toggle('minimized', minimized);
+      minimizeBtn.textContent = minimized ? 'Expandir' : 'Minimizar';
+    }
+
+    minimizeBtn.addEventListener('click', () => setMinimized(!minimized));
+
+    function appendLine(text, cls) {
+      const div = document.createElement('div');
+      div.className = cls;
+      div.textContent = text;
+      consoleEl.appendChild(div);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function appendSep() {
+      const div = document.createElement('div');
+      div.className = 'sep';
+      consoleEl.appendChild(div);
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    // Simplified mock of the TFWR game environment, inspired by the
+    // community __builtins__.py stub. This is NOT the real game logic,
+    // just enough to let example scripts run and drive the visual farm.
+    const ENV_SETUP = `
+import random as _random_mod
+import time as _time_mod
+import json as _json_mod
+
+class _Direction:
+    def __init__(self, name, dx, dy):
+        self.name = name
+        self.dx = dx
+        self.dy = dy
+    def __repr__(self):
+        return self.name
+    def __eq__(self, other):
+        return isinstance(other, _Direction) and self.name == other.name
+    def __hash__(self):
+        return hash(self.name)
+
+North = _Direction("North", 0, 1)
+South = _Direction("South", 0, -1)
+East = _Direction("East", 1, 0)
+West = _Direction("West", -1, 0)
+
+class _EnumValue:
+    def __init__(self, group, name):
+        self.group = group
+        self.name = name
+    def __repr__(self):
+        return "{}.{}".format(self.group, self.name)
+    def __eq__(self, other):
+        return isinstance(other, _EnumValue) and self.group == other.group and self.name == other.name
+    def __hash__(self):
+        return hash((self.group, self.name))
+
+class _EnumGroup:
+    def __init__(self, name, members):
+        self._name = name
+        for m in members:
+            setattr(self, m, _EnumValue(name, m))
+    def __repr__(self):
+        return self._name
+
+Entities = _EnumGroup("Entities", [
+    "Apple", "Bush", "Cactus", "Carrot", "Dead_Pumpkin", "Dinosaur",
+    "Grass", "Hedge", "Pumpkin", "Sunflower", "Treasure", "Tree"
+])
+Items = _EnumGroup("Items", [
+    "Hay", "Wood", "Carrot", "Pumpkin", "Cactus", "Bone",
+    "Weird_Substance", "Gold", "Water", "Fertilizer", "Power"
+])
+Grounds = _EnumGroup("Grounds", ["Grassland", "Soil"])
+Hats = _EnumGroup("Hats", ["Dinosaur_Hat", "Gray_Hat", "Purple_Hat", "Green_Hat", "Brown_Hat"])
+Unlocks = _EnumGroup("Unlocks", [
+    "Speed", "Senses", "Loops", "Carrots", "Debug", "Debug_2",
+    "Dinosaurs", "Expand", "Expand_2", "Fertilizer", "Grass", "Hats",
+    "Import", "Lists", "Mazes", "Megafarm", "Operators",
+    "Plant", "Polyculture", "Pumpkins", "Sunflowers",
+    "Timing", "Trees", "Utilities", "Variables", "Watering"
+])
+
+class _World:
+    def __init__(self):
+        self.size = 5
+        self.x = 0
+        self.y = 0
+        self.grid = {}
+        self.ground = {}
+        self.inventory = {
+            Items.Hay: 1000, Items.Wood: 1000, Items.Carrot: 1000,
+            Items.Pumpkin: 100, Items.Cactus: 100, Items.Bone: 0,
+            Items.Weird_Substance: 0, Items.Gold: 0, Items.Water: 100,
+            Items.Fertilizer: 100, Items.Power: 0
+        }
+        self.start_time = _time_mod.time()
+        self.ticks = 0
+        self.log = []
+
+_world = _World()
+_ACTION_LIMIT = 2000
+
+def _log_event(evt):
+    if len(_world.log) >= _ACTION_LIMIT:
+        raise RuntimeError("__ACTION_LIMIT_REACHED__")
+    _world.log.append(evt)
+
+def _tick(n=1):
+    _world.ticks += n
+
+def _pos():
+    return (_world.x, _world.y)
+
+def get_pos_x():
+    _tick()
+    return _world.x
+
+def get_pos_y():
+    _tick()
+    return _world.y
+
+def get_world_size():
+    _tick()
+    return _world.size
+
+def set_world_size(size):
+    _tick(200)
+    new_size = int(size) if size and size >= 3 else 5
+    _world.size = new_size
+    _world.grid = {}
+    _world.ground = {}
+    _world.x = 0
+    _world.y = 0
+    _log_event({"type": "resize", "size": new_size})
+    return None
+
+def move(direction):
+    _tick(200)
+    nx = (_world.x + direction.dx) % _world.size
+    ny = (_world.y + direction.dy) % _world.size
+    _world.x, _world.y = nx, ny
+    _log_event({"type": "move", "x": nx, "y": ny})
+    return True
+
+def can_move(direction):
+    _tick(1)
+    return True
+
+def get_entity_type():
+    _tick()
+    ent = _world.grid.get(_pos())
+    return ent
+
+def get_ground_type():
+    _tick()
+    return _world.ground.get(_pos(), Grounds.Grassland)
+
+def till():
+    _tick(200)
+    cur = _world.ground.get(_pos(), Grounds.Grassland)
+    new_g = Grounds.Grassland if cur == Grounds.Soil else Grounds.Soil
+    _world.ground[_pos()] = new_g
+    _log_event({"type": "till", "x": _world.x, "y": _world.y, "ground": new_g.name})
+    return None
+
+def can_harvest():
+    _tick()
+    return _pos() in _world.grid
+
+def harvest():
+    if _pos() in _world.grid:
+        _tick(200)
+        ent = _world.grid.pop(_pos())
+        _log_event({"type": "harvest", "x": _world.x, "y": _world.y, "success": True, "entity": ent.name})
+        return True
+    _tick(1)
+    _log_event({"type": "harvest", "x": _world.x, "y": _world.y, "success": False})
+    return False
+
+def plant(entity):
+    _tick(200)
+    if _pos() in _world.grid:
+        _log_event({"type": "plant", "x": _world.x, "y": _world.y, "success": False})
+        return False
+    _world.grid[_pos()] = entity
+    _log_event({"type": "plant", "x": _world.x, "y": _world.y, "success": True, "entity": entity.name})
+    return True
+
+def measure(direction=None):
+    _tick()
+    return None
+
+def swap(direction):
+    _tick(1)
+    _log_event({"type": "swap", "x": _world.x, "y": _world.y, "success": False})
+    return False
+
+def num_items(item):
+    _tick()
+    return _world.inventory.get(item, 0)
+
+def use_item(item, n=1):
+    _tick(200)
+    have = _world.inventory.get(item, 0)
+    if have >= n:
+        _world.inventory[item] = have - n
+        _log_event({"type": "use_item", "x": _world.x, "y": _world.y, "success": True})
+        return True
+    _log_event({"type": "use_item", "x": _world.x, "y": _world.y, "success": False})
+    return False
+
+def get_cost(thing, level=None):
+    _tick()
+    return {Items.Hay: 5}
+
+def unlock(u):
+    _tick(200)
+    return True
+
+def num_unlocked(thing):
+    _tick()
+    return 1
+
+def get_time():
+    return _time_mod.time() - _world.start_time
+
+def get_tick_count():
+    return _world.ticks
+
+def do_a_flip():
+    _log_event({"type": "flip", "x": _world.x, "y": _world.y})
+    print("(a drone faz uma cambalhota)")
+
+def pet_the_piggy():
+    _log_event({"type": "pet", "x": _world.x, "y": _world.y})
+    print("(a porquinha e acariciada)")
+
+def change_hat(hat):
+    _tick(200)
+    return None
+
+def spawn_drone(function, *args):
+    print("[aviso] spawn_drone nao e suportado neste simulador simplificado")
+    return None
+
+def wait_for(drone):
+    return None
+
+def has_finished(drone):
+    return True
+
+def max_drones():
+    return 1
+
+def num_drones():
+    return 1
+
+def set_execution_speed(speed):
+    return None
+
+def random():
+    return _random_mod.random()
+
+def _entity_name(e):
+    return e.name if e is not None else None
+
+def _ground_name(g):
+    return g.name if g is not None else "Grassland"
+
+def _snapshot():
+    grid_list = []
+    for (gx, gy), ent in _world.grid.items():
+        grid_list.append({"x": gx, "y": gy, "entity": _entity_name(ent)})
+    ground_list = []
+    for (gx, gy), gr in _world.ground.items():
+        ground_list.append({"x": gx, "y": gy, "ground": _ground_name(gr)})
+    inv = {}
+    for item, amount in _world.inventory.items():
+        inv[item.name] = amount
+    return {
+        "size": _world.size,
+        "x": _world.x,
+        "y": _world.y,
+        "grid": grid_list,
+        "ground": ground_list,
+        "inventory": inv,
+        "ticks": _world.ticks,
+        "log": list(_world.log),
+    }
+
+def _get_state_json():
+    return _json_mod.dumps(_snapshot())
+
+def _clear_log():
+    _world.log = []
+`;
+
+    let pyodideReady = false;
+    let pyodide = null;
+
+    async function boot() {
+      try {
+        pyodide = await loadPyodide();
+        await pyodide.runPythonAsync(ENV_SETUP);
+        pyodideReady = true;
+        statusEl.textContent = 'pronto';
+        runBtn.disabled = false;
+        consoleEl.innerHTML = '';
+        appendLine('Ambiente pronto. Digite seu codigo e clique em "Rodar".', 'line-sys');
+        syncGameFromPython(true);
+      } catch (err) {
+        statusEl.textContent = 'falha ao carregar';
+        appendLine('Nao foi possivel carregar o Python (verifique sua conexao): ' + err, 'line-err');
+      }
+    }
+
+    async function syncGameFromPython(instant) {
+      const stateJson = pyodide.runPython('_get_state_json()');
+      const state = JSON.parse(stateJson);
+      const events = state.log || [];
+      pyodide.runPython('_clear_log()');
+
+      const useDelay = !instant && events.length > 0 && events.length <= 250;
+      for (const evt of events) {
+        window.TFWRGame.applyEvent(evt);
+        window.TFWRGame.render();
+        if (useDelay) await sleep(80);
+      }
+      window.TFWRGame.hardSync(state);
+      window.TFWRGame.render();
+    }
+
+    let stopRequested = false;
+
+    async function runCode() {
+      if (!pyodideReady) return;
+      if (minimized) setMinimized(false);
+      stopRequested = false;
+      const code = codeEl.value;
+      runBtn.disabled = true;
+      stopBtn.style.display = 'inline-flex';
+      appendSep();
+      appendLine('>>> executando...', 'line-sys');
+
+      const MAX_CYCLES = 500;
+      let cycles = 0;
+
+      while (true) {
+        cycles++;
+        pyodide.runPython(`
+import sys, io
+_stdout_capture = io.StringIO()
+_old_stdout = sys.stdout
+sys.stdout = _stdout_capture
+`);
+        let errorText = null;
+        let hitLimit = false;
+        try {
+          await pyodide.runPythonAsync(code);
+        } catch (err) {
+          const msg = err.message || String(err);
+          if (msg.includes('__ACTION_LIMIT_REACHED__')) {
+            hitLimit = true;
+          } else {
+            errorText = msg;
+          }
+        }
+        const captured = pyodide.runPython(`
+sys.stdout = _old_stdout
+_stdout_capture.getvalue()
+`);
+        if (captured) {
+          appendLine(captured.replace(/\\n$/, ''), 'line-out');
+        }
+        if (errorText) {
+          appendLine(errorText, 'line-err');
+        }
+        if (!captured && !errorText && !hitLimit) {
+          appendLine('(sem saida)', 'line-sys');
+        }
+
+        await syncGameFromPython(false);
+
+        if (errorText) break;
+        if (!hitLimit) break;
+        if (stopRequested) {
+          appendLine('Execucao interrompida manualmente.', 'line-sys');
+          break;
+        }
+        if (cycles >= MAX_CYCLES) {
+          appendLine('Muitos ciclos de simulacao seguidos - parando automaticamente para nao travar a aba. Clique em "Rodar" para continuar.', 'line-sys');
+          break;
+        }
+        appendLine('(loop continuo detectado - continuando a simulacao automaticamente; clique em "Parar" para interromper)', 'line-sys');
+      }
+
+      runBtn.disabled = false;
+      stopBtn.style.display = 'none';
+    }
+
+    stopBtn.addEventListener('click', () => { stopRequested = true; });
+
+    async function resetWorld() {
+      if (!pyodideReady) return;
+      await pyodide.runPythonAsync('_world.__init__()');
+      appendSep();
+      appendLine('Mundo resetado (posicao, grid e inventario).', 'line-sys');
+      await syncGameFromPython(true);
+    }
+
+    runBtn.addEventListener('click', runCode);
+    clearBtn.addEventListener('click', () => { consoleEl.innerHTML = ''; });
+    resetBtn.addEventListener('click', resetWorld);
+    codeEl.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runCode();
+        return;
+      }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = codeEl.selectionStart;
+        const end = codeEl.selectionEnd;
+        const value = codeEl.value;
+        if (start === end) {
+          // no selection: just insert 4 spaces at cursor
+          codeEl.value = value.slice(0, start) + '    ' + value.slice(end);
+          codeEl.selectionStart = codeEl.selectionEnd = start + 4;
+        } else {
+          // selection spans one or more lines: indent/unindent every line touched
+          const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+          let lineEnd = value.indexOf('\n', end);
+          if (lineEnd === -1) lineEnd = value.length;
+          const block = value.slice(lineStart, lineEnd);
+          const lines = block.split('\n');
+          let newLines, addedFirstLine = 4, removedFirstLine = 0;
+          if (e.shiftKey) {
+            newLines = lines.map((line) => {
+              if (line.startsWith('    ')) return line.slice(4);
+              if (line.startsWith('\t')) return line.slice(1);
+              return line.replace(/^ {1,3}/, '');
+            });
+            removedFirstLine = lines[0].length - newLines[0].length;
+            addedFirstLine = -removedFirstLine;
+          } else {
+            newLines = lines.map((line) => '    ' + line);
+          }
+          const newBlock = newLines.join('\n');
+          codeEl.value = value.slice(0, lineStart) + newBlock + value.slice(lineEnd);
+          codeEl.selectionStart = start + addedFirstLine;
+          codeEl.selectionEnd = end + (newBlock.length - block.length);
+        }
+      }
+    });
+
+    boot();
+  </script>
+</body>
+</html>

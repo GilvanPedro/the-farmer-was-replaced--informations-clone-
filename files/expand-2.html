@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expand 2 &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+    --comment: #8a8a82;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited { color: var(--link-visited); }
+  a.inline-link:hover { color: #e4f07a; }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+  .code-block .comment { color: var(--comment); font-weight: 400; }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Expand 2</h1>
+
+      <p>Your farm has expanded again! Now the tiles are no longer in a nice row, so you need to find a way to traverse a square grid.</p>
+
+      <p style="margin-top: 18px;">With the <span class="inline-code kw">while</span> loop this is not possible until you unlock senses and operators.</p>
+      <p>It is time to introduce the <span class="inline-code kw">for</span> loop.</p>
+
+      <p style="margin-top: 18px;">You can read all about the <span class="inline-code kw">for</span> loop on the <a class="inline-link" href="for-loop.html">For Loop</a> page, but for now you will only need it to repeat code a fixed number of times.</p>
+
+      <div class="code-block"><span class="comment">#do n flips</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="const">5</span>):
+    <span class="fn">do_a_flip()</span></div>
+
+      <p><span class="inline-code fn">range</span><span class="inline-code">(n)</span> creates a range of numbers from <span class="inline-code const">0</span> to <span class="inline-code">n-1</span> which has <span class="inline-code">n</span> elements in it. The <span class="inline-code kw">for</span> loop runs its loop body once for every element in the sequence. In this example <span class="inline-code fn">do_a_flip()</span> will be called <span class="inline-code const">5</span> times.</p>
+
+      <p style="margin-top: 18px;">The function <span class="inline-code fn">get_world_size()</span> is also available now. It returns the side length of your farm. This way you can write code that won't break with the next expand upgrade.</p>
+
+      <div class="code-block"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">get_world_size()</span>):
+    <span class="fn">harvest()</span>
+    <span class="fn">move</span>(<span class="const">North</span>)</div>
+
+      <p>This example harvests one column of the farm for any farm size.</p>
+
+      <p style="margin-top: 18px;">If you're stuck on trying to figure out how to move the drone around the farm see the hint below.</p>
+      <p>There are, of course, several ways to move around the farm.</p>
+      <p>What we're looking for is a way to traverse it in a systematic way that won't break when the farm grows again.</p>
+      <p>A systematic way to get to every place on the farm would be to repeat the following 2 steps forever:</p>
+
+      <p style="margin: 0;">1.Move <span class="inline-code const">North</span> until it wraps back.</p>
+      <p style="margin-bottom: 18px;">2.Move <span class="inline-code const">East</span></p>
+
+      <p><span class="inline-code kw">for</span> <span class="inline-code">i</span> <span class="inline-code kw">in</span> <span class="inline-code fn">range</span><span class="inline-code">(</span><span class="inline-code fn">get_world_size()</span><span class="inline-code">):</span> may be helpful to turn this idea into code.</p>
+      <p>The basic traversal might look like this:</p>
+
+      <div class="code-block"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">get_world_size()</span>):
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">get_world_size()</span>):
+        <span class="comment">#do a flip on every tile</span>
+        <span class="fn">do_a_flip()</span>
+        <span class="fn">move</span>(<span class="const">North</span>)
+    <span class="fn">move</span>(<span class="const">East</span>)</div>
+    </div>
+  </div>
+</body>
+</html>

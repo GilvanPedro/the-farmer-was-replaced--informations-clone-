@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lists &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Lists</h1>
+
+      <p>Lists are an easy way to store multiple values in a single variable.</p>
+      <p>You can create new lists like this:</p>
+
+      <div class="code-block">some_list = [<span class="const">2</span>, <span class="const">True</span>, Items.<span class="const">Hay</span>]</div>
+
+      <p>The list now contains the values <span class="inline-code const">2</span>, <span class="inline-code const">True</span> and <span class="inline-code">Items.<span style="color: var(--const);">Hay</span></span>.</p>
+      <p>A list can also be empty:</p>
+
+      <div class="code-block">empty_list = []</div>
+
+      <p>You can access an element of a list by its index. The index is <span class="inline-code const">0</span> for the first element, <span class="inline-code const">1</span> for the second element, <span class="inline-code const">2</span> for the third...</p>
+
+      <p>plants carrots</p>
+      <div class="code-block">entities = [Entities.<span class="const">Tree</span>, Entities.<span class="const">Carrot</span>, Entities.<span class="const">Pumpkin</span>]
+<span class="fn">plant</span>(entities[<span class="const">1</span>])</div>
+
+      <p>You can iterate over a list using a for loop. The following example sums the all elements in the list.</p>
+
+      <div class="code-block">numbers = [<span class="const">4</span>, <span class="const">7</span>, <span class="const">2</span>, <span class="const">5</span>]
+sum = <span class="const">0</span>
+<span class="kw">for</span> number <span class="kw">in</span> numbers:
+    sum += number
+sum is now <span class="const">18</span></div>
+
+      <p>The following list methods allow you to add and remove elements:</p>
+
+      <p><span class="inline-code">elements.</span><span class="inline-code fn">append</span><span class="inline-code">(elem)</span> adds an element to the end of the list:</p>
+
+      <div class="code-block">numbers = [<span class="const">2</span>, <span class="const">6</span>, <span class="const">12</span>]
+numbers.<span class="fn">append</span>(<span class="const">7</span>)
+numbers is now [<span class="const">2</span>, <span class="const">6</span>, <span class="const">12</span>, <span class="const">7</span>]</div>
+
+      <p><span class="inline-code">elements.</span><span class="inline-code fn">remove</span><span class="inline-code">(elem)</span> removes the first occurrence of an element from a list:</p>
+
+      <div class="code-block">numbers = [<span class="const">1</span>, <span class="const">2</span>, <span class="const">4</span>, <span class="const">2</span>]
+numbers.<span class="fn">remove</span>(<span class="const">2</span>)
+numbers is now [<span class="const">1</span>, <span class="const">4</span>, <span class="const">2</span>]</div>
+
+      <p><span class="inline-code">elements.</span><span class="inline-code fn">insert</span><span class="inline-code">(index, elem)</span> inserts an element at the given index:</p>
+
+      <div class="code-block">some_list = [Entities.<span class="const">Tree</span>, Items.<span class="const">Hay</span>]
+some_list.<span class="fn">insert</span>(<span class="const">1</span>, Items.<span class="const">Wood</span>)
+some_list is now [Entities.<span class="const">Tree</span>, Items.<span class="const">Wood</span>, Items.<span class="const">Hay</span>]</div>
+
+      <p><span class="inline-code">elements.</span><span class="inline-code fn">pop</span><span class="inline-code">(index)</span> removes the element at the specified index.</p>
+      <p>If no index is specified, the last item is removed.</p>
+
+      <div class="code-block">numbers = [<span class="const">3</span>, <span class="const">5</span>, <span class="const">8</span>, <span class="const">25</span>]
+numbers.<span class="fn">pop</span>()
+numbers is now [<span class="const">3</span>, <span class="const">5</span>, <span class="const">8</span>]
+numbers.<span class="fn">pop</span>(<span class="const">1</span>)
+numbers is now [<span class="const">3</span>, <span class="const">8</span>]</div>
+
+      <p>The <span class="inline-code fn">len()</span> function returns the length of the list.</p>
+
+      <div class="code-block">numbers = [<span class="const">3</span>, <span class="const">2</span>, <span class="const">1</span>]
+x = <span class="fn">len</span>(numbers)
+x is now <span class="const">3</span></div>
+
+      <p>Lists have reference semantics. This means that assigning a list to a variable assigns the same list object to that variable, rather than making a copy of the list.</p>
+      <p>If two variables reference the same list, changes to the list will be seen by both.</p>
+
+      <div class="code-block">a = [<span class="const">1</span>, <span class="const">2</span>]
+b = a
+b.<span class="fn">pop</span>()
+a and b are now both [<span class="const">1</span>]</div>
+    </div>
+  </div>
+</body>
+</html>

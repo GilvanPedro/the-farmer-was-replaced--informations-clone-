@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual do Jogo &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    background: var(--icon);
+    color: #232319;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.15);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .back-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    background: transparent;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--icon);
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  .doc-section {
+    margin-bottom: 30px;
+  }
+
+  .doc-section h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+
+  .link-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+  }
+
+  .link-grid a {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 17px;
+    color: var(--link);
+    text-decoration: underline;
+    line-height: 1.9;
+  }
+
+  .link-grid a:visited {
+    color: var(--link-visited);
+  }
+
+  .link-grid a:hover {
+    color: #e4f07a;
+  }
+
+  .link-grid a:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    .doc-section h2 { font-size: 20px; }
+    .link-grid a { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+      <a class="home-btn" href="files/terminal.html" aria-label="Abrir terminal Python">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 9l3 3-3 3"/><path d="M13 15h3"/></svg>
+        Terminal
+      </a>
+    </div>
+    <div class="content" id="top">
+      <h1>General Info</h1>
+        <section class="doc-section">
+          <h2>General Info</h2>
+          <nav class="link-grid">
+          <a href="files/external-editor.html">External Editor</a>
+          <a href="files/first-program.html">First Program</a>
+          <a href="files/getting-started.html">Getting Started</a>
+          <a href="files/loading-backups.html">Loading Backups</a>
+          <a href="files/output.html">Output</a>
+          <a href="files/stats.html">Stats</a>
+          <a href="files/credits.html">Credits</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Programming</h2>
+          <nav class="link-grid">
+          <a href="files/break.html">Break</a>
+          <a href="files/debug.html">Debug</a>
+          <a href="files/comments.html">Comments</a>
+          <a href="files/continue.html">Continue</a>
+          <a href="files/dictionaries.html">Dictionaries</a>
+          <a href="files/for-loop.html">For Loop</a>
+          <a href="files/functions.html">Functions</a>
+          <a href="files/if.html">If</a>
+          <a href="files/import.html">Import</a>
+          <a href="files/lists.html">Lists</a>
+          <a href="files/operators.html">Operators</a>
+          <a href="files/name-scopes.html">Name Scopes</a>
+          <a href="files/sets.html">Sets</a>
+          <a href="files/tuples.html">Tuples</a>
+          <a href="files/variables.html">Variables</a>
+          <a href="files/while-loop.html">While Loop</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Unlocks</h2>
+          <nav class="link-grid">
+          <a href="files/auto-unlock.html">Auto Unlock</a>
+          <a href="files/cactus.html">Cactus</a>
+          <a href="files/carrots.html">Carrots</a>
+          <a href="files/costs.html">Costs</a>
+          <a href="files/debug.html">Debug</a>
+          <a href="files/debug-2.html">Debug_2</a>
+          <a href="files/dictionaries.html">Dictionaries</a>
+          <a href="files/dinosaurs.html">Dinosaurs</a>
+          <a href="files/expand.html">Expand</a>
+          <a href="files/expand-2.html">Expand 2</a>
+          <a href="files/fertilizer.html">Fertilizer</a>
+          <a href="files/functions.html">Functions</a>
+          <a href="files/grass.html">Grass</a>
+          <a href="files/hats.html">Hats</a>
+          <a href="files/import.html">Import</a>
+          <a href="files/lists.html">Lists</a>
+          <a href="files/loops.html">Loops</a>
+          <a href="files/mazes.html">Mazes</a>
+          <a href="files/megafarm.html">Megafarm</a>
+          <a href="files/operators.html">Operators</a>
+          <a href="files/plant.html">Plant</a>
+          <a href="files/polyculture.html">Polyculture</a>
+          <a href="files/pumpkins.html">Pumpkins</a>
+          <a href="files/senses.html">Senses</a>
+          <a href="files/speed.html">Speed</a>
+          <a href="files/sunflowers.html">Sunflowers</a>
+          <a href="files/timing.html">Timing</a>
+          <a href="files/trees.html">Trees</a>
+          <a href="files/utilities.html">Utilities</a>
+          <a href="files/variables.html">Variables</a>
+          <a href="files/watering.html">Watering</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Built-in Functions</h2>
+          <nav class="link-grid">
+          <a href="files/abs.html">abs</a>
+          <a href="files/can-harvest.html">can_harvest</a>
+          <a href="files/can-move.html">can_move</a>
+          <a href="files/change-hat.html">change_hat</a>
+          <a href="files/clear.html">clear</a>
+          <a href="files/dict.html">dict</a>
+          <a href="files/do-a-flip.html">do_a_flip</a>
+          <a href="files/get-companion.html">get_companion</a>
+          <a href="files/get-cost.html">get_cost</a>
+          <a href="files/get-entity-type.html">get_entity_type</a>
+          <a href="files/get-ground-type.html">get_ground_type</a>
+          <a href="files/get-pos-x.html">get_pos_x</a>
+          <a href="files/get-pos-y.html">get_pos_y</a>
+          <a href="files/get-tick-count.html">get_tick_count</a>
+          <a href="files/get-time.html">get_time</a>
+          <a href="files/get-water.html">get_water</a>
+          <a href="files/get-world-size.html">get_world_size</a>
+          <a href="files/harvest.html">harvest</a>
+          <a href="files/has-finished.html">has_finished</a>
+          <a href="files/len.html">len</a>
+          <a href="files/list.html">list</a>
+          <a href="files/max.html">max</a>
+          <a href="files/max-drones.html">max_drones</a>
+          <a href="files/measure.html">measure</a>
+          <a href="files/min.html">min</a>
+          <a href="files/move.html">move</a>
+          <a href="files/num-drones.html">num_drones</a>
+          <a href="files/num-items.html">num_items</a>
+          <a href="files/num-unlocked.html">num_unlocked</a>
+          <a href="files/pet-the-piggy.html">pet_the_piggy</a>
+          <a href="files/plant.html">plant</a>
+          <a href="files/print.html">print</a>
+          <a href="files/quick-print.html">quick_print</a>
+          <a href="files/random.html">random</a>
+          <a href="files/range.html">range</a>
+          <a href="files/set.html">set</a>
+          <a href="files/set-execution-speed.html">set_execution_speed</a>
+          <a href="files/set-world-size.html">set_world_size</a>
+          <a href="files/spawn-drone.html">spawn_drone</a>
+          <a href="files/str.html">str</a>
+          <a href="files/swap.html">swap</a>
+          <a href="files/tap.html">tap</a>
+          <a href="files/till.html">till</a>
+          <a href="files/unlock.html">unlock</a>
+          <a href="files/use-item.html">use_item</a>
+          <a href="files/wait-for.html">wait_for</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Items</h2>
+          <nav class="link-grid">
+          <a href="files/hay.html">Hay</a>
+          <a href="files/wood.html">Wood</a>
+          <a href="files/carrot.html">Carrot</a>
+          <a href="files/pumpkin.html">Pumpkin</a>
+          <a href="files/cactus.html">Cactus</a>
+          <a href="files/bone.html">Bone</a>
+          <a href="files/weird-substance.html">Weird_Substance</a>
+          <a href="files/gold.html">Gold</a>
+          <a href="files/water.html">Water</a>
+          <a href="files/fertilizer.html">Fertilizer</a>
+          <a href="files/power.html">Power</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Entities</h2>
+          <nav class="link-grid">
+          <a href="files/apple.html">Apple</a>
+          <a href="files/bush.html">Bush</a>
+          <a href="files/cactus.html">Cactus</a>
+          <a href="files/carrot.html">Carrot</a>
+          <a href="files/dead-pumpkin.html">Dead_Pumpkin</a>
+          <a href="files/dinosaur.html">Dinosaur</a>
+          <a href="files/grass.html">Grass</a>
+          <a href="files/hedge.html">Hedge</a>
+          <a href="files/pumpkin.html">Pumpkin</a>
+          <a href="files/sunflower.html">Sunflower</a>
+          <a href="files/treasure.html">Treasure</a>
+          <a href="files/tree.html">Tree</a>
+          </nav>
+        </section>
+
+        <section class="doc-section">
+          <h2>Grounds</h2>
+          <nav class="link-grid">
+          <a href="files/grassland.html">Grassland</a>
+          <a href="files/soil.html">Soil</a>
+          </nav>
+        </section>
+    </div>
+  </div>
+</body>
+</html>

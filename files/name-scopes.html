@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name Scopes &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --kw: #e0a83e;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.kw { color: var(--kw); }
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .kw { color: var(--kw); }
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  .annotated {
+    margin: 4px 0 18px;
+    line-height: 1.8;
+  }
+
+  .annotated .code-line {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+
+  .annotated .code-line .kw { color: var(--kw); }
+  .annotated .code-line .const { color: var(--const); }
+
+  .annotated .note-line {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    font-size: 17px;
+    color: var(--ink);
+  }
+
+  .annotated .indent-1 { padding-left: 28px; }
+  .annotated .indent-2 { padding-left: 56px; }
+  .annotated .gap { height: 10px; }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 13px; }
+    .annotated .code-line, .annotated .note-line { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Name Scopes</h1>
+
+      <p>Scopes determine which variables can be accessed from where. A scope is basically a mapping from names to values.</p>
+      <p>They work basically the same as in Python.</p>
+
+      <p style="margin-top: 18px;">There is a global scope, and each function has a local scope.</p>
+      <p>When you define a variable, it gets added to the current scope.</p>
+      <p>Anything outside of a function definition is considered part of the global scope.</p>
+
+      <div class="code-block">x = <span class="const">1</span></div>
+      <p>Assigns a value of <span class="inline-code const">1</span> to the name <span class="inline-code">x</span> in the global scope.</p>
+
+      <p style="margin-top: 18px;">This <span class="inline-code kw">def</span> statement assigns a function to the name <span class="inline-code">f</span> in the global scope.</p>
+
+      <div class="annotated">
+        <div class="code-line"><span class="kw">def</span> f():</div>
+        <div class="note-line indent-1">Assign a value of 1 to the name y in the local scope of f.</div>
+        <div class="code-line indent-1">y = <span class="const">1</span></div>
+        <div class="gap"></div>
+        <div class="note-line indent-1">Assign a function to the name g in the local scope of f.</div>
+        <div class="code-line indent-1"><span class="kw">def</span> g():</div>
+        <div class="code-line indent-2"><span class="kw">pass</span></div>
+      </div>
+
+      <div class="code-block">f()</div>
+      <p>Retrieves the function stored in <span class="inline-code">f</span> from the global scope and calls it.</p>
+
+      <div class="code-block"><span class="fn">print</span>(y)</div>
+      <p>This print statement in the global scope throws an error because <span class="inline-code">y</span> was never declared in the global scope so we can't read it here.</p>
+      <p>It only existed in the local scope of <span class="inline-code">f</span>.</p>
+
+      <h2>The global keyword</h2>
+
+      <p>By default all variables in functions bind to the local scope, even if a variable of the same name exists in the global scope.</p>
+
+      <div class="code-block">x = <span class="const">0</span></div>
+
+      <div class="code-block"><span class="kw">def</span> f():
+    x = <span class="const">1</span></div>
+
+      <div class="code-block">f()
+<span class="fn">print</span>(x)</div>
+
+      <p>This code prints <span class="inline-code const">0</span> because the local <span class="inline-code">x</span> inside <span class="inline-code">f</span> is not the same variable as the global <span class="inline-code">x</span>, so the global <span class="inline-code">x</span> remains unchanged. This is important because otherwise a function call could accidentally override a global variable that just happens to have the same name as a local variable of that function.</p>
+
+      <p style="margin-top: 18px;">If you want to write to a global variable, you must do so explicitly using the <span class="inline-code kw">global</span> keyword.</p>
+
+      <div class="code-block">x = <span class="const">0</span></div>
+
+      <div class="code-block"><span class="kw">def</span> f():
+    <span class="kw">global</span> x
+    x = <span class="const">1</span>
+f()
+<span class="fn">print</span>(x)</div>
+
+      <p>In this example, <span class="inline-code kw">global</span> x binds <span class="inline-code">x</span> to the global variable <span class="inline-code">x</span> defined above it. This will now print <span class="inline-code const">1</span>.</p>
+      <p>Note that changing global variables is usually the first step towards spaghetti code, where every part of the program affects every other part of the program, so don't overuse it.</p>
+
+      <h2>Loops and branches</h2>
+
+      <p>Loops and branches do not create their own scopes, so anything declared within them can still be used outside.</p>
+
+      <div class="code-block"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="const">3</span>):
+    <span class="kw">pass</span>
+<span class="fn">print</span>(i)</div>
+
+      <p>This will print <span class="inline-code const">2</span> because the last iteration of the <span class="inline-code kw">for</span> loop assigned <span class="inline-code const">2</span> to <span class="inline-code">i</span>.</p>
+    </div>
+  </div>
+</body>
+</html>

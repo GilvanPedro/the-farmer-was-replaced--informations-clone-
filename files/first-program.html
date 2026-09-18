@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Program &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --code-bg: #232322;
+    --code-fn: #e0cf4a;
+    --accent-ring: #d9722e;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 400;
+    margin: 34px 0 14px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited {
+    color: var(--link-visited);
+  }
+
+  a.inline-link:hover {
+    color: #e4f07a;
+  }
+
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--code-bg);
+    color: var(--ink);
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 0.95em;
+  }
+
+  .fn-line {
+    display: block;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--code-fn);
+    font-weight: 700;
+    font-size: 19px;
+    margin: 10px 0;
+  }
+
+  .and-line {
+    margin: 10px 0 18px;
+  }
+
+  .code-window-demo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #4c4c46;
+    border: 1px solid #6f6f68;
+    border-radius: 4px;
+    padding: 8px 10px;
+    max-width: 420px;
+    margin: 26px 0;
+  }
+
+  .code-window-demo .win-btn {
+    width: 32px;
+    height: 28px;
+    background: var(--icon);
+    color: #2c2c2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .code-window-demo .win-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .code-window-demo .win-btn--active {
+    outline: 2px solid var(--accent-ring);
+    outline-offset: 1px;
+  }
+
+  .code-window-demo .win-filename {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--ink);
+    font-size: 15px;
+  }
+
+  .code-window-demo .win-spacer {
+    flex: 1;
+  }
+
+  .code-window-demo .win-btn--small {
+    width: 26px;
+    height: 26px;
+    font-weight: 700;
+  }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--code-fn);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.7;
+    margin: 18px 0;
+  }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    p { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>First Program</h1>
+
+      <h2>Text editor</h2>
+
+      <p>All programming is done in code windows. Each code window corresponds to a text file containing code. You can rename the file by clicking on its name at the top of the window.</p>
+
+      <p>The code can be edited like in any text editor as long as it's not running. You can execute the program directly by pressing the green play button in the code window.</p>
+
+      <div class="code-window-demo" aria-hidden="true">
+        <span class="win-btn win-btn--active" title="Executar">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg>
+        </span>
+        <span class="win-btn" title="Executar tudo">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg>
+        </span>
+        <span class="win-filename">main</span>
+        <span class="win-spacer"></span>
+        <span class="win-btn win-btn--small">&#8722;</span>
+        <span class="win-btn win-btn--small">&times;</span>
+      </div>
+
+      <p>You can create more code files using the "+" button in the upper right corner of the screen. You can dock a window to another window by dragging it onto it.</p>
+
+      <p>You will notice that once you start typing, a simple code completion window will pop up. Press Tab to insert the code completion.</p>
+
+      <p>Don't worry if this is your first time programming. The language is unlocked step by step, so you won't be overwhelmed by all the things you can do. The syntax is also similar to that of Python, which is one of the most widely used programming languages in the world, so learning it is not completely wasted.</p>
+
+      <p>If you already know Python, it's not a problem either, you'll just be able to skip the early game quickly to get to the more interesting stuff.</p>
+
+      <p>Currently, there are two drone commands available.</p>
+
+      <span class="fn-line">harvest()</span>
+
+      <p class="and-line">and</p>
+
+      <span class="fn-line">do_a_flip()</span>
+
+      <p>These are function calls. You can think of a function as a command that can be executed. You execute it using the <code>()</code> parentheses.</p>
+
+      <p>Try typing these statements in the code window and pressing the execute button.</p>
+
+      <p>You can think of your code as a sequence of statements. You can run multiple statements in a row like this:</p>
+
+      <div class="code-block">
+        harvest()<br>
+        do_a_flip()<br>
+        harvest()
+      </div>
+
+      <h2>Unlocks</h2>
+
+      <p>Collecting grass will give you hay. Hay can be used to unlock loops in the unlock menu. Open the unlock menu with the button in the top right corner.</p>
+    </div>
+  </div>
+</body>
+</html>

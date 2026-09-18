@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mazes &mdash; Documentacao</title>
+<style>
+  :root {
+    --bg: #262625;
+    --bg-panel: #2c2c2b;
+    --bg-titlebar: #565650;
+    --ink: #f2f0e8;
+    --ink-dim: #b9b6a9;
+    --link: #c3d64a;
+    --link-visited: #9fae3f;
+    --icon: #7c8a3d;
+    --scrollbar: #45443f;
+    --const: #c9e06e;
+    --fn: #e0cf4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a19;
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .window {
+    width: min(900px, 100%);
+    height: min(720px, 100vh);
+    background: var(--bg-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+
+  .titlebar {
+    background: var(--bg-titlebar);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn,
+  .titlebar .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 16px 0 12px;
+    border-radius: 18px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .titlebar .back-btn {
+    background: var(--icon);
+    color: #232319;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .titlebar .back-btn svg,
+  .titlebar .home-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .titlebar .back-btn:hover {
+    background: #93a34a;
+  }
+
+  .titlebar .home-btn {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--icon);
+  }
+
+  .titlebar .home-btn:hover {
+    background: rgba(124, 138, 61, 0.25);
+  }
+
+  .titlebar .back-btn:active,
+  .titlebar .home-btn:active {
+    transform: translateY(1px);
+  }
+
+  .titlebar .back-btn:focus-visible,
+  .titlebar .home-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .content {
+    overflow-y: auto;
+    padding: 28px 32px 48px;
+    flex: 1;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .content::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+  }
+  .content::-webkit-scrollbar-track {
+    background: var(--bg-panel);
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 74ch;
+    margin: 0 0 18px;
+  }
+
+  a.inline-link {
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--link);
+    text-decoration: underline;
+  }
+
+  a.inline-link:visited { color: var(--link-visited); }
+  a.inline-link:hover { color: #e4f07a; }
+
+  .inline-code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+  }
+
+  .inline-code.const { color: var(--const); }
+  .inline-code.fn { color: var(--fn); }
+
+  .code-block {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 4px 0 18px;
+    white-space: pre;
+  }
+
+  .code-block .const { color: var(--const); }
+  .code-block .fn { color: var(--fn); }
+
+  @media (max-width: 600px) {
+    .window { height: 100vh; width: 100vw; }
+    .content { padding: 20px 18px 40px; }
+    h1 { font-size: 26px; }
+    p { font-size: 15px; }
+    .code-block { font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <a class="back-btn" href="javascript:history.back()" aria-label="Voltar para a pagina anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Voltar
+      </a>
+      <a class="home-btn" href="index.html" aria-label="Ir para a pagina geral">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 11.5L12 4l8 7.5"/>
+          <path d="M6 10v9h5v-5h2v5h5v-9"/>
+        </svg>
+        Pagina Geral
+      </a>
+    </div>
+    <div class="content">
+      <h1>Mazes</h1>
+
+      <p>Items.<span class="inline-code const">Weird_Substance</span>, which is obtained by <a class="inline-link" href="fertilizer.html">fertilizing</a> plants, has a strange effect on bushes. If the drone is over a bush and you call <span class="inline-code fn">use_item</span><span class="inline-code">(Items.<span style="color: var(--const);">Weird_Substance</span>, amount)</span> the bush will grow into a maze of hedges.</p>
+
+      <p>The size of the maze depends on the amount of Items.<span class="inline-code const">Weird_Substance</span> used (the second argument of the <span class="inline-code fn">use_item()</span> call).</p>
+
+      <p>Without maze upgrades, using <span class="inline-code">n</span> Items.<span class="inline-code const">Weird_Substance</span> will result in a nxn maze. Each maze upgrade level doubles the treasure, but it also doubles the amount of Items.<span class="inline-code const">Weird_Substance</span> needed.</p>
+      <p>So to make a full field maze:</p>
+
+      <div class="code-block"><span class="fn">plant</span>(Entities.<span class="const">Bush</span>)
+substance = <span class="fn">get_world_size()</span> * <span class="const">2</span>**(<span class="fn">num_unlocked</span>(Unlocks.<span class="const">Mazes</span>) - <span class="const">1</span>)
+<span class="fn">use_item</span>(Items.<span class="const">Weird_Substance</span>, substance)</div>
+
+      <p>For some reason the drone can't fly over the hedges, even though they don't look that high.</p>
+
+      <p style="margin-top: 18px;">There is a treasure hidden somewhere in the hedge. Use <span class="inline-code fn">harvest()</span> on the treasure to receive gold equal to the area of the maze. (For example, a 5x5 maze will yield 25 gold.)</p>
+
+      <p>If you use <span class="inline-code fn">harvest()</span> anywhere else the maze will simply disappear.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">get_entity_type()</span> is equal to <span class="inline-code const">Entities.Treasure</span> if the drone is over the treasure and <span class="inline-code const">Entities.Hedge</span> everywhere else in the maze.</p>
+
+      <p style="margin-top: 18px;">Mazes do not contain any loops unless you reuse the maze (see below how to reuse a maze). So there is no way for the drone to end up in the same position again without going back.</p>
+
+      <p style="margin-top: 18px;">You can check if there is a wall by trying to move through it.</p>
+      <p><span class="inline-code fn">move()</span> returns <span class="inline-code const">True</span> if it succeeded and <span class="inline-code const">False</span> otherwise.</p>
+
+      <p style="margin-top: 18px;"><span class="inline-code fn">can_move()</span> can be used to check if there is a wall without moving.</p>
+
+      <p style="margin-top: 18px;">If you have no idea how to get to the treasure, take a look at Hint 1. It shows you how to approach a problem like this.</p>
+
+      <p style="margin-top: 18px;">Using <span class="inline-code fn">measure()</span> anywhere in the maze returns the position of the treasure.</p>
+      <div class="code-block">x, y = <span class="fn">measure()</span></div>
+
+      <p>For an extra challenge you can also reuse the maze by using the same amount of Items.<span class="inline-code const">Weird_Substance</span> on the treasure again.</p>
+      <p>This will collect the treasure and spawn a new treasure at a random position in the maze.</p>
+
+      <p style="margin-top: 18px;">Each time the treasure is moved, some of the maze's walls may be randomly removed. So reused mazes can contain loops.</p>
+
+      <p style="margin-top: 18px;">Note that loops in the maze make it much more difficult because it means that you can get to the same location again without moving back.</p>
+      <p>Reusing a maze doesn't give you more gold than just harvesting and spawning a new maze.</p>
+      <p>This is 100% an extra challenge that you can just skip.</p>
+      <p>It's only worth it if the extra information and the shortcuts help you solve the maze faster.</p>
+
+      <p style="margin-top: 18px;">The treasure can be relocated up to 300 times. After that, using weird substance on the treasure won't increase the gold in it anymore and it won't move anymore.</p>
+    </div>
+  </div>
+</body>
+</html>
